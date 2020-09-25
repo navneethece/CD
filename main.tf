@@ -12,7 +12,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "navneethjkvm1" {
+resource "aws_instance" "navneethvm1" {
   ami = "ami-08f6d36d2fa808eac"
   key_name = "navneethkp"
   instance_type = "t2.micro"
@@ -22,7 +22,7 @@ resource "aws_instance" "navneethjkvm1" {
     Env = "Prod"
   }
   provisioner "local-exec" {
-    command = "echo The servers IP address is ${self.public_ip} && echo ${self.private_ip} myawsserver >> /etc/hosts"
+    command = "echo The servers IP address is ${self.public_ip} && echo ${self.private_ip} navneethvm1 >> /etc/hosts"
   }
  
 provisioner "remote-exec" {
