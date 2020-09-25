@@ -11,7 +11,14 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
-
+data "aws_ami" "navneethami"{
+  most_recent = true
+  owners =["self"]
+  filter {
+    name = "name"
+    values = ["my-ubuntu-*"]
+    }
+  }
 resource "aws_instance" "navneethvm1" {
   ami = "ami-08f6d36d2fa808eac"
   key_name = "navneethkp"
@@ -22,7 +29,7 @@ resource "aws_instance" "navneethvm1" {
     Env = "Prod"
   }
   provisioner "local-exec" {
-    command = "echo The servers IP address is ${self.public_ip} && echo ${self.private_ip} navneethvm1 >> /etc/hosts"
+    command = "echo ${self.public_ip} > /etc/ansible/hosts"
   }
  
 provisioner "remote-exec" {
