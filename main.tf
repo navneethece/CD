@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket  = "techlanders-statefile"
+    bucket  = "navneeth-statefile"
     key  = "terraform/state"
-    region = "us-east-2"
+    region = "us-east-1"
 #   access_key = "XXXXXXXXXXXXXXXXXXXXXX"
 #   secret_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   }
@@ -12,13 +12,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "myawsserver" {
-  ami = "ami-0b16724fe8e66e4ec"
-  key_name = "gagan-cicd"
+resource "aws_instance" "navneethvm1" {
+  ami = "ami-08f6d36d2fa808eac"
+  key_name = "navneethkp"
   instance_type = "t2.micro"
 
   tags = {
-    Name = "Gagan-Ubuntu-Server"
+    Name = "navneethvm1"
     Env = "Prod"
   }
   provisioner "local-exec" {
@@ -27,18 +27,18 @@ resource "aws_instance" "myawsserver" {
  
 provisioner "remote-exec" {
     inline = [
-     "touch /tmp/gagandeep"
+     "touch /tmp/navneeth"
      ]
  connection {
     type     = "ssh"
     user     = "ubuntu"
     insecure = "true"
-    private_key = "${file("/tmp/gagan-cicd.pem")}"
-    host     =  aws_instance.myawsserver.public_ip
+    private_key = "${file("/tmp/navneethkp.pem")}"
+    host     =  aws_instance.navneethvm1.public_ip
   }
 }
 }
 
 output "myawsserver-ip" {
-  value = "${aws_instance.myawsserver.public_ip}"
+  value = "${aws_instance.navneethvm1.public_ip}"
 }
