@@ -16,11 +16,11 @@ data "aws_ami" "navneethami"{
   owners =["self"]
   filter {
     name = "name"
-    values = ["my-ubuntu-*"]
+    values = ["navneeth-my-ubuntu-*"]
     }
   }
 resource "aws_instance" "navneethvm1" {
-  ami = "ami-08f6d36d2fa808eac"
+  ami = data.aws_ami.example.id
   key_name = "navneethkp"
   instance_type = "t2.micro"
 
